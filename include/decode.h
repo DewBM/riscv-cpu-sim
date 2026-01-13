@@ -11,11 +11,12 @@ enum Opcode {
     STORE,
     OP,
     OP_IMM,
-    OP_INVALID
+    OP_INVALID,
+    BRANCH
 };
 
 
-enum Instr_Type { R, I, S };
+enum Instr_Type { R, I, S, B };
 
 struct Instr_Mapping {
     enum Opcode name;

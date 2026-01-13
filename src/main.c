@@ -25,15 +25,17 @@ int main(void) {
 
     cpu_init(&cpu);
 
+/*
     uint32_t instr[] = {0x00A00093, 0x01400113, 0x002081B3, 0x10000213, 0x00322023, 0x00000293, 0x00022283, 0x00528313, 0x00100073};
     for (int i=0; i<9; i++){
 	mem_write(cpu.mem, i*4, instr[i], 1);
     }
+*/
 
 //    mem_write(cpu.mem, 0, 0x00500093, 1);
 //    mem_write(cpu.mem, 4, 0x00100073, 1);
 
-//    load_program(cpu.mem, "tests/bins/test1.bin");
+    load_program(cpu.mem, "tests/bins/test3.bin");
 
     while (!cpu.halt) {
 	cpu_cycle(&cpu);

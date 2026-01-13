@@ -5,6 +5,7 @@ const struct Instr_Mapping opcode_table[] = {
     {STORE, S, 0x23},
     {OP, R, 0x33},
     {OP_IMM, I, 0x13},
+    {BRANCH, B, 0x63},
     {OP_INVALID, -1, -1}
 };
 
@@ -46,17 +47,32 @@ struct Decoded_Instr decode(uint32_t instr) {
 	    d.rd = (instr >> 7) & 0x1F;
 	    d.funct7 = (instr >> 25) & 0x7F;
 	    break;
-	case I:
+	case I: {
 	    d.rd = (instr >> 7) & 0x1F;
-	    uint32_t imm = (instr >> 20) & 0xFFF;
-	    d.imm = sign_extend(imm, 12);
+	    uint32_t imm_temp = (instr >> 20) & 0xFFF;
+	    d.imm = sign_extend(imm_temp, 12);
 	    break;
-	case S:
+	}
+	case S: {
 	    d.rs2 = (instr >> 20) & 0x1F;
 	    uint32_t imm_l = (instr >> 7) & 0x1F;
 	    uint32_t imm_h = (instr >> 25) & 0x7F;
 	    d.imm = sign_extend((imm_h << 5) | imm_l, 12);
 	    break;
+	}
+	case B: {
+	    d.rs2 = (instr >> 20) & 0x1F;
+	    uint32_t imm_11 = (instr >> 7) & 0x1;
+	    uint32_t imm_4_1 = (instr >> 8) & 0xF;
+	    uint32_t imm_10_5 = (instr >> 25) & 0x3F;
+	    uint32_t imm_12 = (instr >> 31) & 0x1;
+	    uint32_t imm_temp = (imm_12 << 11)
+		| (imm_11 << 10)
+		| (imm_10_5 << 4)
+		| imm_4_1;
+	    d.imm = sign_extend(imm_temp << 1, 13);
+	    break;
+	}
     }
 
     return d;
