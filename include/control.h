@@ -16,6 +16,18 @@
 };
 */
 
+enum PC_Target_Src {
+    RS1_VAL, PC
+};
+
+enum PC_Src {
+    PC_PLUS4, PC_TARGET
+};
+
+enum Result_Src {
+    ALU, MEM, PC_PLUS4
+};
+
 enum Alu_Op {
     ALU_ADD,
     ALU_SUB,
@@ -39,13 +51,15 @@ enum Branch_Type {
 };
 
 struct Control {
-    uint8_t result_src;
+    Result_Src result_src;
     uint8_t alu_src;
     enum Alu_Op alu_control;
     uint8_t reg_write;
     uint8_t mem_write;
     uint8_t branch;
     enum Branch_Type branch_type;
+    enum PC_Target_Src pc_target_src;
+    enum PC_Src pc_src;
 };
 
 struct Control control_generate(struct Decoded_Instr *d);

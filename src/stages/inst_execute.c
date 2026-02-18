@@ -22,6 +22,18 @@ static uint32_t alu(struct Flags *flags, uint32_t val1, uint32_t val2, enum Alu_
     return 0;
 }
 
+uint32_t pc_target(uint32_t pc, uint32_t rs1Val, uint32_t imm, enum PC_Target_Src pc_target_src) {
+    switch (pc_target_src) {
+	case RS1_VAL: return rs1Val + imm;
+	case PC: return pc + imm;
+    }
+}
+
+
+uint32_t pc_plus4(uint32_t pc) {
+    return pc + 4;
+}
+
 
 static bool branch(struct Flags *flags, enum Branch_Type branch_type) {
     switch (branch_type) {
@@ -50,9 +62,19 @@ void ex_stage(struct CPU *cpu) {
     if (in->control.branch == 1) {
 	branch_taken = branch(&flags, in->control.branch_type);
     }
-    cpu->pc += branch_taken ? in->imm : 4;
+
+    //cpu->pc += branch_taken ? in->imm : 4;
+    switch (in->control.pc_src) {
+	case PC_PLUS4:
+	    cpu->pc = pc_plus4(cpu->pc);
+	    break;
+	case PC_TARGET:
+	    cpu->pc = pc_target(cpu->pc, in->rs1Val, in->imm, in->control.pc_target_src);
+	    break;
+    }
 
     out->rd = in->rd;
+    out->pcPlus4 = in->pcPlus4;
     out->alu_res = result;
     out->rs2Val = in->rs2Val;
     out->control = in->control;

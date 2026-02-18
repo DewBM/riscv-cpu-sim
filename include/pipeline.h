@@ -15,6 +15,7 @@ struct IF_ID {
 struct ID_EX {
     struct Control control;
     uint32_t rs1Val;
+    uint32_t pcPlus4;
     uint32_t rs2Val;
     uint32_t imm;
     uint32_t rd;
@@ -26,12 +27,14 @@ struct EX_MEM {
     uint32_t alu_res;
     uint32_t rd;
     uint32_t rs2Val;
+    uint32_t pcPlus4;
 };
 
 struct MEM_WB {
     struct Control control;
     uint32_t read_data;
     uint32_t alu_res;
+    uint32_t pcPlus4;
     uint32_t rd;
 };
 

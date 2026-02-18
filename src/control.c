@@ -59,10 +59,12 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.reg_write = 0x01;
 	    control.alu_src = 0x01;
 	    control.mem_write = 0x00;
-	    control.result_src = 0x01;
+	    //control.result_src = 0x01;
+	    control.result_src = MEM;
 	    control.branch = 0;
 	    //alu_op = 0x00;
 	    op_class = ALU_OP_ADD;
+	    control.pc_src = PC_PLUS4;
 	    break;
 
 	case STORE:
@@ -72,26 +74,31 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.branch = 0;
 	    //alu_op = 0x00;
 	    op_class = ALU_OP_ADD;
+	    control.pc_src = PC_PLUS4;
 	    break;
 
 	case OP:
 	    control.reg_write = 0x01;
 	    control.alu_src = 0x00;
 	    control.mem_write = 0x00;
-	    control.result_src = 0x00;
+	    //control.result_src = 0x00;
+	    control.result_src = ALU;
 	    control.branch = 0;
 	    //alu_op = 0x02;
 	    op_class = ALU_OP_R;
+	    control.pc_src = PC_PLUS4;
 	    break;
 
 	case OP_IMM:
 	    control.reg_write = 0x01;
 	    control.alu_src = 0x01;
 	    control.mem_write = 0x00;
-	    control.result_src = 0x00;
+	    //control.result_src = 0x00;
+	    control.result_src = ALU;
 	    control.branch = 0;
 	    //alu_op = 0x02;
 	    op_class = ALU_OP_I;
+	    control.pc_src = PC_PLUS4;
 	    break;
 	case BRANCH:
 	    control.reg_write = 0;
@@ -100,7 +107,12 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.branch = 1;
 	    //alu_op = 1;
 	    op_class = ALU_OP_SUB;
+	    control.pc_src = PC_TARGET;
 	    break;
+	case JAL:
+	    control.reg_write = 1;
+	    control.result_src = PC_PLUS4;
+	    control.pc_src = PC_TARGET;
 	default:
 	    fprintf(stderr, "Fatal error: Unhandled or invalid opcode name %d in control unit.\n", d->mapping.name);
 	    exit(EXIT_FAILURE);
