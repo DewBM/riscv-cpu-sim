@@ -1,0 +1,17 @@
+# Build output
+build/
+
+# Test generated files
+tests/bins/
+tests/elfs/
+
+# Object files (in case of out-of-tree builds)
+*.o
+
+# Archives
+*.zip
+
+# Backup files
+*.old
+
+compile_commands.json
