@@ -115,6 +115,12 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.pc_src = PC_TARGET;
 	    control.pc_target_src = PC;
 	    break;
+	case JALR:
+	    control.reg_write = 1;
+	    control.result_src = RES_PC_PLUS4;
+	    control.pc_src = PC_TARGET;
+	    control.pc_target_src = RS1_VAL;
+	    break;
 	default:
 	    fprintf(stderr, "Fatal error: Unhandled or invalid opcode name %d in control unit.\n", d->mapping.name);
 	    exit(EXIT_FAILURE);
