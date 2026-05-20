@@ -58,9 +58,8 @@ void ex_stage(struct CPU *cpu) {
 	in->control.alu_control
     );
 
-    bool branch_taken = false;
     if (in->control.branch == 1) {
-	branch_taken = branch(&flags, in->control.branch_type);
+	in->control.pc_src = branch(&flags, in->control.branch_type) == true ? PC_TARGET : PC_PLUS4;
     }
 
     //cpu->pc += branch_taken ? in->imm : 4;

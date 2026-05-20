@@ -107,12 +107,14 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.branch = 1;
 	    //alu_op = 1;
 	    op_class = ALU_OP_SUB;
-	    control.pc_src = PC_TARGET;
+	    control.pc_target_src = PC;
 	    break;
 	case JAL:
 	    control.reg_write = 1;
-	    control.result_src = PC_PLUS4;
+	    control.result_src = RES_PC_PLUS4;
 	    control.pc_src = PC_TARGET;
+	    control.pc_target_src = PC;
+	    break;
 	default:
 	    fprintf(stderr, "Fatal error: Unhandled or invalid opcode name %d in control unit.\n", d->mapping.name);
 	    exit(EXIT_FAILURE);

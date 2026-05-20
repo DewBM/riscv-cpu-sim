@@ -6,8 +6,8 @@ const struct Instr_Mapping opcode_table[] = {
     {OP, R, 0x33},
     {OP_IMM, I, 0x13},
     {BRANCH, B, 0x63},
-    {JALR, R, 0x67},
-    {JAL, J, 6F},
+    {JALR, I, 0x67},
+    {JAL, J, 0x6F},
     {OP_INVALID, -1, -1}
 };
 
@@ -81,9 +81,9 @@ struct Decoded_Instr decode(uint32_t instr) {
 	case J: {
 	    d.rd = (instr >> 7) & 0x1F;
 	    uint32_t imm_20 = (instr >> 31) & 0x1;
+	    uint32_t imm_19_12 = (instr >> 12) & 0xFF;
+	    uint32_t imm_11 = (instr >> 20) & 0x1;
 	    uint32_t imm_10_1 = (instr >> 21) & 0x3FF;
-	    uint_32 imm_11 = (instr >> 20) & 0x1;
-	    uint32_t imm_19_12 = (instr >> 21) & 0xFF;
 	    uint32_t imm_temp = (imm_20 << 19) 
 		| (imm_19_12 << 11) 
 		| (imm_11 << 10)

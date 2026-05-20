@@ -11,6 +11,7 @@
 
 struct CPU {
     uint32_t pc;
+    uint32_t pc_next;
     struct Memory *mem;
     struct Registers *reg;
     struct Pipeline pipeline;

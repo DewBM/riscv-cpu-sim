@@ -11,7 +11,7 @@ void wb_stage(struct CPU *cpu) {
 	case MEM:
 	    rdVal = in->read_data;
 	    break;
-	case PC_PLUS4:
+	case RES_PC_PLUS4:
 	    rdVal = in->pcPlus4;
 	    break;
     }
