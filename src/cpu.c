@@ -6,7 +6,7 @@
 #include "../include/stages/wb_stage.h"
 
 void cpu_init(struct CPU *cpu) {
-    cpu->pc = 0x0;
+    cpu->pc = 0x10000;
 
     cpu->mem = malloc(sizeof(struct Memory));
     cpu->reg = malloc(sizeof(struct Registers));
