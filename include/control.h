@@ -25,7 +25,7 @@ enum PC_Src {
 };
 
 enum Result_Src {
-    ALU, MEM, PC_PLUS4
+    ALU, MEM, RES_PC_PLUS4
 };
 
 enum Alu_Op {
@@ -51,7 +51,7 @@ enum Branch_Type {
 };
 
 struct Control {
-    Result_Src result_src;
+    enum Result_Src result_src;
     uint8_t alu_src;
     enum Alu_Op alu_control;
     uint8_t reg_write;

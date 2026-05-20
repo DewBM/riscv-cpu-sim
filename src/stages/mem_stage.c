@@ -14,4 +14,5 @@ void mem_stage(struct CPU *cpu) {
     out->control = in->control;
     out->alu_res = in->alu_res;
     out->rd = in->rd;
+    out->pcPlus4 = in->pcPlus4;
 }
