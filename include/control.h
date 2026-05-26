@@ -33,6 +33,7 @@ enum Alu_Op {
     ALU_SUB,
     ALU_AND,
     ALU_OR,
+    ALU_XOR,
     ALU_SLT,
     ALU_SLTU,
     ALU_SLL,

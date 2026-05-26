@@ -31,6 +31,9 @@ static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7,
 		case 0x3:
 		    control->alu_control = ALU_SLTU;
 		    break;
+		case 0x4:
+		    control->alu_control = ALU_XOR;
+		    break;
 		case 0x5:
 		    if (funct7 == 0)
 			control->alu_control = ALU_SRL;

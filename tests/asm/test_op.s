@@ -76,4 +76,21 @@ _start:
     # SLTU: x18 = (0 <u 0xFFFFFFFF) ? 1 : 0 = 1  (zero is smallest unsigned)
     sltu x18, x0, x27
 
+    # Setup
+    addi x27, x0, -1         # x27 = 0xFFFFFFFF
+    addi x28, x0, 15         # x28 = 0x0000000F
+
+    # XOR: x15 = 20 ^ 7 = 19 = 0x00000013
+    #   0b10100 ^ 0b00111 = 0b10011
+    xor  x15, x20, x21       # x20=20, x21=7 from existing setup
+
+    # XOR: x16 = 0xFFFFFFFF ^ 0x0000000F = 0xFFFFFFF0
+    xor  x16, x27, x28
+
+    # XOR: x17 = x ^ x = 0  (any value XOR itself = 0)
+    xor  x17, x20, x20
+
+    # XOR: x18 = x ^ 0 = x  (any value XOR 0 = itself)
+    xor  x18, x20, x0
+
     ebreak
