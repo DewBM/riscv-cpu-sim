@@ -52,8 +52,16 @@ struct Decoded_Instr decode(uint32_t instr) {
 	case I: {
 	    d.funct3 = (instr >> 12) & 0x7;
 	    d.rd = (instr >> 7) & 0x1F;
-	    uint32_t imm_temp = (instr >> 20) & 0xFFF;
-	    d.imm = sign_extend(imm_temp, 12);
+
+	    if (d.funct3 == 0x1 || d.funct3 == 0x5) {
+		d.imm = (instr >> 20) & 0x1F;
+		d.funct7 = (instr >> 25) & 0x7F;
+	    }
+	    else {
+		uint32_t imm_temp = (instr >> 20) & 0xFFF;
+		d.imm = sign_extend(imm_temp, 12);
+	    }
+
 	    break;
 	}
 	case S: {

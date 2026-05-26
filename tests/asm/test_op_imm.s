@@ -41,4 +41,30 @@ _start:
     addi x25, x0, -5
     slti x9, x25, -3
 
+    # Setup operands
+    addi x25, x0, 1          # x25 = 1
+    addi x26, x0, -1         # x26 = 0xFFFFFFFF
+
+    # SLLI: x10 = 1 << 5 = 32 = 0x00000020
+    slli x10, x25, 5
+
+    # SLLI: x11 = 1 << 31 = 0x80000000 (shift into sign bit)
+    slli x11, x25, 31
+
+    # SRLI: x12 = 0xFFFFFFFF >> 4 = 0x0FFFFFFF (logical, fills with 0)
+    srli x12, x26, 4
+
+    # SRLI: x13 = 0xFFFFFFFF >> 31 = 0x00000001 (only sign bit remains)
+    srli x13, x26, 31
+
+    # SRAI: x14 = 0xFFFFFFFF >> 4 = 0xFFFFFFFF (arithmetic, fills with sign bit 1)
+    srai x14, x26, 4
+
+    # SRAI: x15 = 0xFFFFFFFF >> 31 = 0xFFFFFFFF (all sign bits)
+    srai x15, x26, 31
+
+    # SRAI positive: x16 = 16 >> 2 = 4 (positive, same as logical)
+    addi x27, x0, 16
+    srai x16, x27, 2
+
     ebreak

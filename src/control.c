@@ -35,6 +35,15 @@ static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7,
 		case 0x0:
 		    control->alu_control = ALU_ADD;
 		    break;
+		case 0x1:	// SLLI - logical left shift
+		    control->alu_control = ALU_SLL;
+		    break;
+		case 0x5:	// SRLI - logical right shift and SRAI - arithmatic right shift
+		    if (funct7 == 0)	// SRLI
+			control->alu_control = ALU_SRL;
+		    else if (funct7 == 0x20)	// SRAI
+			control->alu_control = ALU_SRA;
+		    break;
 		case 0x2:	// SLTI instruction
 		    control->alu_control = ALU_SLT;
 		    break;

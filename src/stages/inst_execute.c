@@ -18,6 +18,10 @@ static uint32_t alu(struct Flags *flags, uint32_t val1, uint32_t val2, enum Alu_
 	case ALU_SLT: return ((val1 - val2) >> 31) == 1 ? 1 : 0;
 	case ALU_OR: return val1 | val2;
 	case ALU_AND: return val1 & val2;
+	case ALU_SLL: return val1 << val2;
+	case ALU_SRL: return val1 >> val2;
+	case ALU_SRA: 
+	    return  (val1 >> 31) == 0 ? val1 >> val2 : (val1 >> val2) | (~0U << (32 - val2));
     }
     return 0;
 }
