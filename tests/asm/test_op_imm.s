@@ -25,4 +25,20 @@ _start:
     # XORI: x5 = 0xFF ^ 0x0F = 240 = 0x000000F0
     xori x5, x22, 15
 
+    # SLTI true: x6 = (-1 <s 7) ? 1 : 0 = 1
+    # x23 = -1 = 0xFFFFFFFF (signed: -1, less than 7)
+    addi x23, x0, -1
+    slti x6, x23, 7
+
+    # SLTI false: x7 = (10 <s 7) ? 1 : 0 = 0
+    addi x24, x0, 10
+    slti x7, x24, 7
+
+    # SLTI edge: x8 = (0 <s 0) ? 1 : 0 = 0  (equal, not less)
+    slti x8, x0, 0
+
+    # SLTI negative imm: x9 = (-5 <s -3) ? 1 : 0 = 1
+    addi x25, x0, -5
+    slti x9, x25, -3
+
     ebreak

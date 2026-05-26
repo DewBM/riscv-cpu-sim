@@ -35,6 +35,9 @@ static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7,
 		case 0x0:
 		    control->alu_control = ALU_ADD;
 		    break;
+		case 0x2:	// SLTI instruction
+		    control->alu_control = ALU_SLT;
+		    break;
 		case 0x7:
 		    control->alu_control = ALU_AND;
 		    break;
