@@ -25,4 +25,46 @@ _start:
     # XORI: x5 = 0xFF ^ 0x0F = 240 = 0x000000F0
     xori x5, x22, 15
 
+    # SLTI true: x6 = (-1 <s 7) ? 1 : 0 = 1
+    # x23 = -1 = 0xFFFFFFFF (signed: -1, less than 7)
+    addi x23, x0, -1
+    slti x6, x23, 7
+
+    # SLTI false: x7 = (10 <s 7) ? 1 : 0 = 0
+    addi x24, x0, 10
+    slti x7, x24, 7
+
+    # SLTI edge: x8 = (0 <s 0) ? 1 : 0 = 0  (equal, not less)
+    slti x8, x0, 0
+
+    # SLTI negative imm: x9 = (-5 <s -3) ? 1 : 0 = 1
+    addi x25, x0, -5
+    slti x9, x25, -3
+
+    # Setup operands
+    addi x25, x0, 1          # x25 = 1
+    addi x26, x0, -1         # x26 = 0xFFFFFFFF
+
+    # SLLI: x10 = 1 << 5 = 32 = 0x00000020
+    slli x10, x25, 5
+
+    # SLLI: x11 = 1 << 31 = 0x80000000 (shift into sign bit)
+    slli x11, x25, 31
+
+    # SRLI: x12 = 0xFFFFFFFF >> 4 = 0x0FFFFFFF (logical, fills with 0)
+    srli x12, x26, 4
+
+    # SRLI: x13 = 0xFFFFFFFF >> 31 = 0x00000001 (only sign bit remains)
+    srli x13, x26, 31
+
+    # SRAI: x14 = 0xFFFFFFFF >> 4 = 0xFFFFFFFF (arithmetic, fills with sign bit 1)
+    srai x14, x26, 4
+
+    # SRAI: x15 = 0xFFFFFFFF >> 31 = 0xFFFFFFFF (all sign bits)
+    srai x15, x26, 31
+
+    # SRAI positive: x16 = 16 >> 2 = 4 (positive, same as logical)
+    addi x27, x0, 16
+    srai x16, x27, 2
+
     ebreak
