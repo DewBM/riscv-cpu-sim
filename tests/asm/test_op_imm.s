@@ -67,4 +67,35 @@ _start:
     addi x27, x0, 16
     srai x16, x27, 2
 
+    # Setup
+    addi x28, x0, -1         # x28 = 0xFFFFFFFF (large unsigned)
+
+    # SLTIU: x17 = (7 <u 100) ? 1 : 0 = 1  (small unsigned < imm)
+    addi x29, x0, 7
+    sltiu x17, x29, 100
+
+    # SLTIU: x18 = (0xFFFFFFFF <u 100) ? 1 : 0 = 0  (large unsigned > imm)
+    sltiu x18, x28, 100
+
+    # SLTIU: x19 = (7 <u 7) ? 1 : 0 = 0  (equal, not less)
+    sltiu x19, x29, 7
+
+    # SLTIU: x20 = (0 <u 1) ? 1 : 0 = 1  (zero is smallest unsigned)
+    sltiu x20, x0, 1
+
+    # Setup
+    addi x30, x0, 15         # x30 = 0x0000000F
+
+    # XORI: x21 = 0x0F ^ 0x0F = 0x00000000
+    xori x21, x30, 15
+
+    # XORI: x22 = 0x0F ^ 0x00 = 0x0000000F  (XOR with 0 = itself)
+    xori x22, x30, 0
+
+    # XORI: x23 = 0x0F ^ -1 = 0xFFFFFFF0  (XOR with -1 = bitwise NOT)
+    xori x23, x30, -1
+
+    # XORI: x24 = 0 ^ -1 = 0xFFFFFFFF
+    xori x24, x0, -1
+
     ebreak
