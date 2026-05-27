@@ -5,16 +5,19 @@ struct Flags {
     uint8_t sign; // 0 = positive, 1 = negative
     bool overflow;
     bool carry;
+    bool borrow;
 };
 
 static uint32_t alu(struct Flags *flags, uint32_t val1, uint32_t val2, enum Alu_Op alu_op) {
     switch (alu_op) {
 	case ALU_ADD: return val1 + val2;
-	case ALU_SUB:
+	case ALU_SUB: {
 	    uint32_t res = val1 - val2;
 	    flags->zero = res == 0 ? true : false;
 	    flags->sign = ((res >> 31) & 0x1);
+	    flags->borrow = val1 < val2;
 	    return res;
+	}
 	case ALU_SLT: return ((val1 - val2) >> 31) == 1 ? 1 : 0;
 	case ALU_SLTU: return val1 < val2 ? 1 : 0;	
 	case ALU_OR: return val1 | val2;
@@ -43,10 +46,12 @@ uint32_t pc_plus4(uint32_t pc) {
 
 static bool branch(struct Flags *flags, enum Branch_Type branch_type) {
     switch (branch_type) {
-	case BEQ: return flags->zero == true ? true : false;
-	case BNE: return flags->zero == false ? true : false;
+	case BEQ: return flags->zero;
+	case BNE: return !flags->zero;
 	case BLT: return (flags->zero == false && flags->sign == 1) ? true : false;
 	case BGE: return (flags->zero == true || flags->sign == 0) ? true : false;
+	case BLTU: return flags->borrow;
+	case BGEU: return !flags->borrow;
     }
     return false;
 }

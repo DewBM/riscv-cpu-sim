@@ -64,4 +64,39 @@ bge_t_end:
     addi x8, x0, 1
 bge_nt_end:
 
+    # Setup
+    addi x24, x0, -1         # x24 = 0xFFFFFFFF (large unsigned)
+    addi x25, x0, 5          # x25 = 5
+
+    #--- BLTU taken: x25 <u x24 (5 <u 0xFFFFFFFF) → skip → x9 = 0 ---
+    addi x9, x0, 0
+    bltu x25, x24, bltu_t_end
+    addi x9, x0, 0xFF
+bltu_t_end:
+
+    #--- BLTU not-taken: x24 <u x25 (0xFFFFFFFF <u 5) false → fall through → x10 = 1 ---
+    addi x10, x0, 0
+    bltu x24, x25, bltu_nt_end
+    addi x10, x0, 1
+bltu_nt_end:
+
+    #--- BGEU taken: x24 >=u x25 (0xFFFFFFFF >=u 5) → skip → x11 = 0 ---
+    addi x11, x0, 0
+    bgeu x24, x25, bgeu_t_end
+    addi x11, x0, 0xFF
+bgeu_t_end:
+
+    #--- BGEU not-taken: x25 >=u x24 (5 >=u 0xFFFFFFFF) false → fall through → x12 = 1 ---
+    addi x12, x0, 0
+    bgeu x25, x24, bgeu_nt_end
+    addi x12, x0, 1
+bgeu_nt_end:
+
+    #--- BLTU vs BLT distinction: x24 <u x25 false, but x24 <s x25 true ---
+    #--- confirms unsigned comparison is used, not signed ---
+    addi x13, x0, 0
+    bltu x24, x25, bltu_sign_end   # 0xFFFFFFFF <u 5 = false → fall through
+    addi x13, x0, 1                # x13 = 1 (not taken, correct)
+bltu_sign_end:
+
     ebreak

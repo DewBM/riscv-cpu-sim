@@ -43,16 +43,18 @@ enum Alu_Op {
 
 enum Alu_Op_Class {
     ALU_OP_ADD,
-    ALU_OP_SUB,
+    ALU_OP_BRANCH,
     ALU_OP_R,
     ALU_OP_I
 };
 
 enum Branch_Type {
-    BEQ = 0,
-    BNE = 1,
-    BLT = 4,
-    BGE = 5
+    BEQ,
+    BNE,
+    BLT,
+    BGE,
+    BLTU,
+    BGEU
 };
 
 struct Control {

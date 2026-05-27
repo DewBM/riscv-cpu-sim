@@ -11,7 +11,7 @@ A cycle-accurate RV32I instruction set simulator implementing a classic 5-stage 
 | OP-IMM  | ADDI, ANDI, ORI, XORI, SLTI, SLTIU, SLLI, SRLI, SRAI |
 | LOAD    | LW                               |
 | STORE   | SW                               |
-| BRANCH  | BEQ, BNE, BLT, BGE              |
+| BRANCH  | BEQ, BNE, BLT, BGE, BLTU, BGEU   |
 | JUMP    | JAL, JALR                        |
 
 ## Requirements

@@ -5,13 +5,15 @@ static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7,
 	case ALU_OP_ADD:
 	    control->alu_control = ALU_ADD;
 	    break;
-	case ALU_OP_SUB:
+	case ALU_OP_BRANCH:
 	    control->alu_control = ALU_SUB; // branch
 	    switch (funct3) {
 		case 0: control->branch_type = BEQ; break;
 		case 1: control->branch_type = BNE; break;
 		case 4: control->branch_type = BLT; break;
 		case 5: control->branch_type = BGE; break;
+		case 6: control->branch_type = BLTU; break;
+		case 7: control->branch_type = BGEU; break;
 		default: 
 		    fprintf(stderr, "Error: Invalid branch type value: %d\n", funct3);
 		    break;
@@ -142,7 +144,7 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.mem_write = 0;
 	    control.branch = 1;
 	    //alu_op = 1;
-	    op_class = ALU_OP_SUB;
+	    op_class = ALU_OP_BRANCH;
 	    control.pc_target_src = PC;
 	    break;
 	case JAL:
