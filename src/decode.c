@@ -53,7 +53,7 @@ struct Decoded_Instr decode(uint32_t instr) {
 	    d.funct3 = (instr >> 12) & 0x7;
 	    d.rd = (instr >> 7) & 0x1F;
 
-	    if (d.funct3 == 0x1 || d.funct3 == 0x5) {
+	    if (instr_mapping.name == OP_IMM && (d.funct3 == 0x1 || d.funct3 == 0x5)) {
 		d.imm = (instr >> 20) & 0x1F;
 		d.funct7 = (instr >> 25) & 0x7F;
 	    }
