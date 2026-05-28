@@ -13,10 +13,10 @@ void mem_stage(struct CPU *cpu) {
     else {
 	switch (in->control.ls_type) {
 	    case BYTE:
-		out->read_data = sign_extend(mem_read8(cpu->mem, in->alu_res), 8*BYTE);
+		out->read_data = in->control.extend_type == SIGN ? sign_extend(mem_read8(cpu->mem, in->alu_res), 8*BYTE) : mem_read8(cpu->mem, in->alu_res);
 		break;
 	    case HALF_WORD:
-		out->read_data = sign_extend(mem_read16(cpu->mem, in->alu_res), 8*HALF_WORD);
+		out->read_data = in->control.extend_type == SIGN ? sign_extend(mem_read16(cpu->mem, in->alu_res), 8*HALF_WORD) : mem_read16(cpu->mem, in->alu_res);
 		break;
 	    case WORD:
 		out->read_data = mem_read32(cpu->mem, in->alu_res);

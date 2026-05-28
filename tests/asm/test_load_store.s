@@ -51,4 +51,13 @@ main_code:
     sw   x4, 12(x31)
     lb   x8, 12(x31)        # x8 = 0x0000002A
 
+    #--- LHU (zero extend, upper bits must be 0) ---
+    addi x4, x0, -1
+    sw   x4, 8(x31)         # store 0xFFFFFFFF at slot 2
+    lhu  x9, 8(x31)         # x9 = 0x0000FFFF (zero-extended, NOT 0xFFFFFFFF)
+
+    #--- LBU (zero extend, upper bits must be 0) ---
+    lb   x10, 8(x31)        # x10 = 0xFFFFFFFF (reuse slot 2, sign-extended)
+    lbu  x11, 8(x31)        # x11 = 0x000000FF (zero-extended, NOT 0xFFFFFFFF)
+
     ebreak

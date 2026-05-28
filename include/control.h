@@ -64,6 +64,12 @@ enum LS_Type {
     WORD = 4
 };
 
+
+enum Extend_Type {
+    SIGN,
+    ZERO
+};
+
 struct Control {
     enum Result_Src result_src;
     uint8_t alu_src;
@@ -75,6 +81,7 @@ struct Control {
     enum PC_Target_Src pc_target_src;
     enum PC_Src pc_src;
     enum LS_Type ls_type;
+    enum Extend_Type extend_type;
 };
 
 struct Control control_generate(struct Decoded_Instr *d);
