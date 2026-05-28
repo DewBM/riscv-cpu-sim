@@ -1,4 +1,4 @@
-#include "../../include/stages/inst_decode.h"
+#include "stages/inst_decode.h"
 
 void id_stage(struct CPU *cpu) {
     struct IF_ID *in = &cpu->pipeline.if_id;

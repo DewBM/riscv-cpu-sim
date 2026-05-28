@@ -1,4 +1,4 @@
-#include "../include/control.h"
+#include "control.h"
 
 static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7, enum Alu_Op_Class op_class) {
     switch (op_class) {

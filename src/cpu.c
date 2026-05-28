@@ -1,9 +1,9 @@
-#include "../include/cpu.h"
-#include "../include/stages/inst_fetch.h"
-#include "../include/stages/inst_decode.h"
-#include "../include/stages/inst_execute.h"
-#include "../include/stages/mem_stage.h"
-#include "../include/stages/wb_stage.h"
+#include "cpu.h"
+#include "stages/inst_fetch.h"
+#include "stages/inst_decode.h"
+#include "stages/inst_execute.h"
+#include "stages/mem_stage.h"
+#include "stages/wb_stage.h"
 
 void cpu_init(struct CPU *cpu) {
     cpu->pc = 0x10000;

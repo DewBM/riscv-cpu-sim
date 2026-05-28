@@ -1,4 +1,4 @@
-#include "../../include/stages/mem_stage.h"
+#include "stages/mem_stage.h"
 
 void mem_stage(struct CPU *cpu) {
     struct EX_MEM *in = &cpu->pipeline.ex_mem;
