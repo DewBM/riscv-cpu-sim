@@ -2,9 +2,7 @@
 #define MEMORY_H
 
 #include <stdint.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <stdio.h>
 
 
 struct Memory {
@@ -14,7 +12,9 @@ struct Memory {
 
 void mem_init(struct Memory *mem, uint32_t size);
 
-uint32_t mem_read(struct Memory *mem, uint32_t address);
+uint32_t mem_read32(struct Memory *mem, uint32_t address);
+uint16_t mem_read16(struct Memory *mem, uint32_t address);
+uint8_t mem_read8(struct Memory *mem, uint32_t address);
 
 void mem_write(struct Memory *mem, uint32_t address, uint32_t write_data, uint8_t write_enable);
 

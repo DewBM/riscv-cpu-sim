@@ -1,4 +1,7 @@
 #include "stages/mem_stage.h"
+#include "control.h"
+#include "memory.h"
+#include "utils.h"
 
 void mem_stage(struct CPU *cpu) {
     struct EX_MEM *in = &cpu->pipeline.ex_mem;
@@ -8,7 +11,17 @@ void mem_stage(struct CPU *cpu) {
 	mem_write(cpu->mem, in->alu_res, in->rs2Val, in->control.mem_write);
     }
     else {
-	out->read_data = mem_read(cpu->mem, in->alu_res);
+	switch (in->control.ls_type) {
+	    case BYTE:
+		out->read_data = in->control.extend_type == SIGN ? sign_extend(mem_read8(cpu->mem, in->alu_res), 8*BYTE) : mem_read8(cpu->mem, in->alu_res);
+		break;
+	    case HALF_WORD:
+		out->read_data = in->control.extend_type == SIGN ? sign_extend(mem_read16(cpu->mem, in->alu_res), 8*HALF_WORD) : mem_read16(cpu->mem, in->alu_res);
+		break;
+	    case WORD:
+		out->read_data = mem_read32(cpu->mem, in->alu_res);
+		break;
+	}
     }
 
     out->control = in->control;
