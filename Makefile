@@ -9,6 +9,7 @@ ASFLAGS = -march=rv32i -mabi=ilp32
 
 SRC = \
       src/main.c \
+      src/utils.c \
       src/cpu.c \
       src/registers.c \
       src/memory.c \

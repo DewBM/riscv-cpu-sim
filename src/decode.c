@@ -1,4 +1,5 @@
 #include "../include/decode.h"
+#include "utils.h"
 
 const struct Instr_Mapping opcode_table[] = {
     {LOAD, I, 0x03},
@@ -21,12 +22,6 @@ struct Instr_Mapping decode_type(uint32_t instr) {
 	}
     }
     return opcode_table[OP_INVALID];
-}
-
-
-static uint32_t sign_extend(uint32_t val, int nBits) {
-    uint32_t mask = 1U << (nBits -1);
-    return (val ^ mask) - mask;
 }
 
 
