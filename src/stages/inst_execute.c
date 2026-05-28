@@ -1,4 +1,4 @@
-#include "../../include/stages/inst_execute.h"
+#include "stages/inst_execute.h"
 
 struct Flags {
     bool zero;

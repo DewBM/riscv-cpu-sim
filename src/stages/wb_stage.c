@@ -1,4 +1,4 @@
-#include "../../include/stages/wb_stage.h"
+#include "stages/wb_stage.h"
 
 void wb_stage(struct CPU *cpu) {
     struct MEM_WB *in = &cpu->pipeline.mem_wb;

@@ -1,4 +1,4 @@
-#include "../include/cpu.h"
+#include "cpu.h"
 
 
 void load_program(struct Memory *mem, const char *filename) {

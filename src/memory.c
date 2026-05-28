@@ -1,4 +1,4 @@
-#include "../include/memory.h"
+#include "memory.h"
 
 
 void mem_init(struct Memory *mem, uint32_t size) {

@@ -1,4 +1,4 @@
-#include "../../include/stages/inst_fetch.h"
+#include "stages/inst_fetch.h"
 
 void if_stage(struct CPU *cpu) {
     struct IF_ID *out = &cpu->pipeline.if_id;

@@ -1,4 +1,4 @@
-#include "../include/decode.h"
+#include "decode.h"
 #include "utils.h"
 
 const struct Instr_Mapping opcode_table[] = {
