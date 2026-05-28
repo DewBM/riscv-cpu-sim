@@ -13,5 +13,5 @@ void if_stage(struct CPU *cpu) {
 	//    }
 
     out->pc = cpu->pc;
-    out->inst = mem_read(cpu->mem, cpu->pc);	// fetch the instruction from memory and store it in the if_id pipeline register
+    out->inst = mem_read32(cpu->mem, cpu->pc);	// fetch the instruction from memory and store it in the if_id pipeline register
 }

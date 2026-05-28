@@ -1,4 +1,7 @@
 #include "memory.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 void mem_init(struct Memory *mem, uint32_t size) {
@@ -6,16 +9,30 @@ void mem_init(struct Memory *mem, uint32_t size) {
     mem->data = calloc(size, 1);
 }
 
-uint32_t mem_read(struct Memory *mem, uint32_t address) {
-    uint32_t eff_address = address % mem->size; // address space is circular
+static uint32_t mem_read(struct Memory *mem, uint32_t address, int size) {
+    uint32_t eff_address = address % mem->size;
 
-    return *(uint32_t *)(mem->data + eff_address);
-/*
-    return (uint32_t)mem->data[eff_address]
-	| (uint32_t)mem->data[eff_address+1] << 8
-	| (uint32_t)mem->data[eff_address+2] << 16
-	| (uint32_t)mem->data[eff_address+3] << 24;
-*/
+    switch (size) {
+	case 1: return *(uint8_t *)(mem->data + eff_address);
+	case 2: return *(uint16_t *)(mem->data + eff_address);
+	case 4: return *(uint32_t *)(mem->data + eff_address);
+	default: 
+	    fprintf(stderr, "Error: Memory address misalignment\n");
+	    exit(EXIT_FAILURE);
+    }
+}
+
+uint32_t mem_read32(struct Memory *mem, uint32_t address) {
+    return mem_read(mem, address, 4);
+}
+
+uint16_t mem_read16(struct Memory *mem, uint32_t address) {
+    return (uint16_t) mem_read(mem, address, 2);
+}
+
+
+uint8_t mem_read8(struct Memory *mem, uint32_t address) {
+    return (uint8_t) mem_read(mem, address, 1);
 }
 
 void mem_write(struct Memory *mem, uint32_t address, uint32_t write_data, uint8_t write_enable) {

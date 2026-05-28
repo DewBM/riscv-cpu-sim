@@ -57,6 +57,13 @@ enum Branch_Type {
     BGEU
 };
 
+// type of load, store instruction
+enum LS_Type {
+    BYTE = 1,
+    HALF_WORD = 2,
+    WORD = 4
+};
+
 struct Control {
     enum Result_Src result_src;
     uint8_t alu_src;
@@ -67,6 +74,7 @@ struct Control {
     enum Branch_Type branch_type;
     enum PC_Target_Src pc_target_src;
     enum PC_Src pc_src;
+    enum LS_Type ls_type;
 };
 
 struct Control control_generate(struct Decoded_Instr *d);

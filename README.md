@@ -9,7 +9,7 @@ A cycle-accurate RV32I instruction set simulator implementing a classic 5-stage 
 |---------|----------------------------------|
 | OP      | ADD, SUB, AND, OR, SLL, SRL, SRA, SLT, SLTU |
 | OP-IMM  | ADDI, ANDI, ORI, XORI, SLTI, SLTIU, SLLI, SRLI, SRAI |
-| LOAD    | LW                               |
+| LOAD    | LW, LH, LB                       |
 | STORE   | SW                               |
 | BRANCH  | BEQ, BNE, BLT, BGE, BLTU, BGEU   |
 | JUMP    | JAL, JALR                        |

@@ -4,6 +4,11 @@ static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7,
     switch (op_class) {
 	case ALU_OP_ADD:
 	    control->alu_control = ALU_ADD;
+	    switch (funct3) {
+		case 0: control->ls_type = BYTE; break;
+		case 1: control->ls_type = HALF_WORD; break;
+		case 2: control->ls_type = WORD; break;
+	    }
 	    break;
 	case ALU_OP_BRANCH:
 	    control->alu_control = ALU_SUB; // branch
