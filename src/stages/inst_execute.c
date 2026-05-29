@@ -64,8 +64,8 @@ void ex_stage(struct CPU *cpu) {
 
     uint32_t result = alu(
 	&flags,
-	in->rs1Val,
-	in->control.alu_src == 0x00 ? in->rs2Val : in->imm,
+	((in->control.alu_src >> 1) & 0x1) == 0x0 ? in->rs1Val : cpu->pc,
+	(in->control.alu_src & 0x1) == 0x0 ? in->rs2Val : in->imm,
 	in->control.alu_control
     );
 

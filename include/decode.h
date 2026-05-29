@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 enum Opcode {
     LOAD,
@@ -14,11 +12,13 @@ enum Opcode {
     BRANCH,
     JALR,
     JAL,
+    LUI,
+    AUIPC,
     OP_INVALID
 };
 
 
-enum Instr_Type { R, I, S, B, J };
+enum Instr_Type { R, I, S, B, J, U };
 
 struct Instr_Mapping {
     enum Opcode name;

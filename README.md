@@ -13,7 +13,7 @@ A cycle-accurate RV32I instruction set simulator implementing a classic 5-stage 
 | STORE   | SW, SH, SB                       |
 | BRANCH  | BEQ, BNE, BLT, BGE, BLTU, BGEU   |
 | JUMP    | JAL, JALR                        |
-
+| UPPER IMM | LUI, AUIPC |
 ## Requirements
 
 - `gcc`

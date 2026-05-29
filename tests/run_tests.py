@@ -29,6 +29,7 @@ TESTS = [
     "test_load_store",
     "test_branch",
     "test_jal_jalr",
+    "test_lui_auipc",
 ]
 
 # ── GDB Remote Serial Protocol client ─────────────────────────────────────────
