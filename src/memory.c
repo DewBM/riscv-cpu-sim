@@ -1,4 +1,5 @@
 #include "memory.h"
+#include "control.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,17 +36,14 @@ uint8_t mem_read8(struct Memory *mem, uint32_t address) {
     return (uint8_t) mem_read(mem, address, 1);
 }
 
-void mem_write(struct Memory *mem, uint32_t address, uint32_t write_data, uint8_t write_enable) {
+void mem_write(struct Memory *mem, uint32_t address, uint32_t write_data, enum LS_Type size, uint8_t write_enable) {
     if (write_enable == 0) {
 	fprintf(stderr, "Cannot write: write_enable is not asserted\n");
 	exit(EXIT_FAILURE);
     }
     uint32_t eff_address = address % mem->size;
 
-    *(uint32_t *)(mem->data + eff_address) = write_data;
-
-//    mem->data[eff_address] = (uint8_t)(write_data);
-//    mem->data[eff_address+1] = (uint8_t)(write_data >> 8);
-//    mem->data[eff_address+2] = (uint8_t)(write_data >> 16);
-//    mem->data[eff_address+3] = (uint8_t)(write_data >> 24);
+    for (int i=0; i < size; i++) {
+	mem->data[eff_address + i] = (uint8_t)(write_data >> (i*8));
+    }
 }
