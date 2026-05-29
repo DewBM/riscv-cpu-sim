@@ -45,7 +45,8 @@ enum Alu_Op_Class {
     ALU_OP_ADD,
     ALU_OP_BRANCH,
     ALU_OP_R,
-    ALU_OP_I
+    ALU_OP_I,
+    ALU_OP_NONE
 };
 
 enum Branch_Type {

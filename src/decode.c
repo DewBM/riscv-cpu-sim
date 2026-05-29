@@ -1,5 +1,7 @@
 #include "decode.h"
 #include "utils.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 const struct Instr_Mapping opcode_table[] = {
     {LOAD, I, 0x03},
@@ -9,6 +11,8 @@ const struct Instr_Mapping opcode_table[] = {
     {BRANCH, B, 0x63},
     {JALR, I, 0x67},
     {JAL, J, 0x6F},
+    {LUI, U, 0x37},
+    {AUIPC, U, 0x17},
     {OP_INVALID, -1, -1}
 };
 
@@ -92,6 +96,13 @@ struct Decoded_Instr decode(uint32_t instr) {
 		| (imm_11 << 10)
 		| imm_10_1;
 	    d.imm = sign_extend(imm_temp << 1, 21);
+	    break;
+	}
+	case U: {
+	    d.rd = (instr >> 7) & 0x1F;
+	    d.rs1 = 0;	// set rs1 as x0 explicitly to pass imm through alu without any alterations.
+	    d.imm = (instr & 0xFFFFF000);
+	    break;
 	}
     }
 

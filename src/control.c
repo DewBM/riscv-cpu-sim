@@ -1,4 +1,6 @@
 #include "control.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7, enum Alu_Op_Class op_class) {
     switch (op_class) {
@@ -103,6 +105,8 @@ static void alu_decoder(struct Control *control, uint8_t funct3, uint8_t funct7,
 		    break;
 	    }
 	    break;
+	case ALU_OP_NONE:
+	    break;
     }
 }
 
@@ -174,12 +178,28 @@ struct Control control_generate(struct Decoded_Instr *d) {
 	    control.result_src = RES_PC_PLUS4;
 	    control.pc_src = PC_TARGET;
 	    control.pc_target_src = PC;
+	    op_class = ALU_OP_NONE;
 	    break;
 	case JALR:
 	    control.reg_write = 1;
 	    control.result_src = RES_PC_PLUS4;
 	    control.pc_src = PC_TARGET;
 	    control.pc_target_src = RS1_VAL;
+	    op_class = ALU_OP_NONE;
+	    break;
+	case LUI:
+	    control.reg_write = 1;
+	    control.pc_src = PC_PLUS4;
+	    control.alu_src = 1;
+	    control.result_src = ALU;
+	    op_class = ALU_OP_ADD;
+	    break;
+	case AUIPC:
+	    control.reg_write = 1;
+	    control.pc_src = PC_PLUS4;
+	    control.alu_src = 3;
+	    control.result_src = ALU;
+	    op_class = ALU_OP_ADD;
 	    break;
 	default:
 	    fprintf(stderr, "Fatal error: Unhandled or invalid opcode name %d in control unit.\n", d->mapping.name);
