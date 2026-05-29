@@ -8,7 +8,7 @@ void mem_stage(struct CPU *cpu) {
     struct MEM_WB *out = &cpu->pipeline.mem_wb;
 
     if (in->control.mem_write == 1) {
-	mem_write(cpu->mem, in->alu_res, in->rs2Val, in->control.mem_write);
+	mem_write(cpu->mem, in->alu_res, in->rs2Val, in->control.ls_type, in->control.mem_write);
     }
     else {
 	switch (in->control.ls_type) {

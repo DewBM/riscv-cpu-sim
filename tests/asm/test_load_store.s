@@ -60,4 +60,32 @@ main_code:
     lb   x10, 8(x31)        # x10 = 0xFFFFFFFF (reuse slot 2, sign-extended)
     lbu  x11, 8(x31)        # x11 = 0x000000FF (zero-extended, NOT 0xFFFFFFFF)
 
+    #--- SH then LW (verify only lower 16 bits written, upper bytes untouched) ---
+    addi x4, x0, 0           # clear slot 3
+    sw   x4, 12(x31)
+    addi x4, x0, -1          # x4 = 0xFFFFFFFF
+    sh   x4, 12(x31)         # stores only 0xFFFF at slot 3
+    lw   x12, 12(x31)        # x12 = 0x0000FFFF (upper 2 bytes still 0)
+
+    #--- SH truncation (upper bits of source discarded) ---
+    addi x4, x0, 0
+    sw   x4, 12(x31)         # clear slot 3
+    addi x4, x0, -1          # x4 = 0xFFFFFFFF (has upper bits set)
+    sh   x4, 12(x31)         # stores only 0xFFFF
+    lw   x13, 12(x31)        # x13 = 0x0000FFFF (upper 2 bytes discarded)
+
+    #--- SB then LW (verify only lowest byte written) ---
+    addi x4, x0, 0
+    sw   x4, 12(x31)         # clear slot 3
+    addi x4, x0, -1          # x4 = 0xFFFFFFFF
+    sb   x4, 12(x31)         # stores only 0xFF at slot 3
+    lw   x14, 12(x31)        # x14 = 0x000000FF (upper 3 bytes still 0)
+
+    #--- SB truncation (upper bits of source discarded) ---
+    addi x4, x0, 0
+    sw   x4, 12(x31)         # clear slot 3
+    addi x4, x0, 0x7FF       # x4 = 0x000007FF
+    sb   x4, 12(x31)         # stores only 0xFF (lower 8 bits of 0x7FF)
+    lw   x15, 12(x31)        # x15 = 0x000000FF
+
     ebreak
