@@ -64,7 +64,7 @@ void ex_stage(struct CPU *cpu) {
 
     uint32_t result = alu(
 	&flags,
-	((in->control.alu_src >> 1) & 0x1) == 0x0 ? in->rs1Val : cpu->pc,
+	((in->control.alu_src >> 1) & 0x1) == 0x0 ? in->rs1Val : in->pc,
 	(in->control.alu_src & 0x1) == 0x0 ? in->rs2Val : in->imm,
 	in->control.alu_control
     );
@@ -73,18 +73,17 @@ void ex_stage(struct CPU *cpu) {
 	in->control.pc_src = branch(&flags, in->control.branch_type) == true ? PC_TARGET : PC_PLUS4;
     }
 
-    //cpu->pc += branch_taken ? in->imm : 4;
     switch (in->control.pc_src) {
 	case PC_PLUS4:
-	    cpu->pc = pc_plus4(cpu->pc);
+	    // cpu->pc = pc_plus4(in->pc);
 	    break;
 	case PC_TARGET:
-	    cpu->pc = pc_target(cpu->pc, in->rs1Val, in->imm, in->control.pc_target_src);
+	    cpu->pc = pc_target(in->pc, in->rs1Val, in->imm, in->control.pc_target_src);
 	    break;
     }
 
+    out->pcPlus4 = pc_plus4(in->pc);
     out->rd = in->rd;
-    out->pcPlus4 = in->pcPlus4;
     out->alu_res = result;
     out->rs2Val = in->rs2Val;
     out->control = in->control;
