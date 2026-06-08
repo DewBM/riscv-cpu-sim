@@ -30,6 +30,7 @@ TESTS = [
     "test_branch",
     "test_jal_jalr",
     "test_lui_auipc",
+    "test_all",
 ]
 
 # ── GDB Remote Serial Protocol client ─────────────────────────────────────────
@@ -146,7 +147,11 @@ def get_qemu_registers(elf_path: str, port: int = GDB_PORT) -> Optional[list[int
         finally:
             client.close()
     finally:
-        proc.wait(timeout=3)
+        try:
+            proc.wait(timeout=3)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()
 
 
 # ── Simulator helpers ─────────────────────────────────────────────────────────
